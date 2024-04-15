@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +21,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--q+maag7i!3s&e975e6(5#t5+l9-+r%^n&a&=f6mp#a5o!v5m-'
+SECRET_KEY = config('SECRET_KEY')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app',
     'django_celery_results',
-    # 'django_celery_beat'
+    'django_celery_beat',
 
 ]
 
@@ -135,4 +137,16 @@ CELERY_TIMEZONE = 'Asia/Kolkata'
 
 
 CELERY_RESULT_BACKEND = 'django-db'
+
+# Celery Beat
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
+
+# SMTP Email Backend Configuration
+EMAIL_HOST = config('EMAIL_HOST')    # Your SMTP server address
+EMAIL_PORT = config('EMAIL_PORT') # Your SMTP port (587 is commonly used for TLS)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS')  # Enable TLS (Transport Layer Security)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')  # Your SMTP username/email
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')   # Your SMTP password
+
 
