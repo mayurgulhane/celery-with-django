@@ -1,1 +1,1 @@
-# celery-with-django
+# celery-with-django project
